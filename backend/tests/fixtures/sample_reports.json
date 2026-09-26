@@ -1,0 +1,54 @@
+{
+  "description": "Sample input used by the backend tests. The first entry is the reference report from Section 1.1 of the requirements report and is quoted unchanged. The remaining entries are written by the team to cover the length boundaries in US-04 and US-05. This file is test input only; it is not the labelled dataset, which lives in ml/data/labelled/.",
+  "valid": [
+    {
+      "id": "reference",
+      "note": "Section 1.1 of the requirements report. Used as the canonical example throughout the project.",
+      "original_text": "login crashes sometimes when i put wrong password and click login, happened on chrome windows, expected error message but application closes",
+      "logs": null
+    },
+    {
+      "id": "minimum_length",
+      "note": "Exactly 20 characters, the lower bound accepted by US-04 criterion 1.",
+      "original_text": "app freezes on save.",
+      "logs": null
+    },
+    {
+      "id": "with_logs",
+      "note": "Covers US-05: the log field is separate from the description and is stored unmodified.",
+      "original_text": "Uploading a profile picture larger than 2 MB fails silently. Nothing happens after I click Upload and the old picture stays.",
+      "logs": "Traceback (most recent call last):\n  File \"app/api/uploads.py\", line 42, in store_avatar\n    image = Image.open(upload.file)\nPIL.UnidentifiedImageError: cannot identify image file"
+    },
+    {
+      "id": "multiline",
+      "note": "Line breaks and numbering in the pasted text must be preserved exactly (US-04 criterion 3).",
+      "original_text": "1. Open the settings page\n2. Change the language to Hindi\n3. Press Save\n\nThe page reloads in English again. I expected it to stay in Hindi."
+    }
+  ],
+  "invalid": [
+    {
+      "id": "empty",
+      "note": "US-04 criterion 2: empty input shows an inline error and is not submitted.",
+      "original_text": "",
+      "expected_error": "too_short"
+    },
+    {
+      "id": "too_short",
+      "note": "19 characters, one below the lower bound in US-04 criterion 1.",
+      "original_text": "app freezes on save",
+      "expected_error": "too_short"
+    },
+    {
+      "id": "whitespace_only",
+      "note": "Whitespace does not count towards the minimum length.",
+      "original_text": "                              ",
+      "expected_error": "too_short"
+    }
+  ],
+  "boundaries": {
+    "original_text_min_chars": 20,
+    "original_text_max_chars": 10000,
+    "logs_max_chars": 50000,
+    "source": "US-04 criterion 1 and US-05 criterion 1"
+  }
+}
